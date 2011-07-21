@@ -11,5 +11,5 @@ all: $(TARGET)
 clean: 
 	\rm *.o pram.exe
 
-main.o: 
+main.o: main.cpp
 	$(CC) $(FLAGS) -c main.cpp 
