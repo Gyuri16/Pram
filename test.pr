@@ -1,0 +1,7 @@
+def main
+begin
+def x;
+def y;
+x:=(x+y)*x;
+
+end

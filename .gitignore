@@ -1,0 +1,8 @@
+*.o
+*.output
+*.pr
+*.swp
+pram
+parser.cc
+parser.h
+scanner.cc
