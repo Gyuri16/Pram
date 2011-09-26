@@ -3,7 +3,7 @@
 
 #include "symboltable.h"
 
-enum Instructions {RET, READ_LOC, READ_GLOB, WRITE, CALL, LOAD, JMP, JMPFALSE, STORE, ADD, SUB, MUL, DIV};
+enum Instructions {RET, READ_LOC, READ_GLOB, WRITE, CALL, LOAD, JMP, JMPFALSE, JMPTRUE, STORE, ADD, SUB, MUL, DIV};
 
 typedef unsigned int ArgumentType;
 typedef std::pair<Instructions, ArgumentType> InstrPair;
@@ -21,6 +21,7 @@ public:
 	void addInstruction(InstrPair instruction);
 	int reserveInstruction(Instructions JMPType);
 	void backPatch(int address);
+	int getCurrentAddress();
 
 	int addLocal(std::string name) throw(symbolTableException);
 	int getLocalAddress(std::string name) throw(symbolTableException);

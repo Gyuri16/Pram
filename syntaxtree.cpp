@@ -116,7 +116,12 @@ WhileNode::~WhileNode() {
 }
 
 void WhileNode::generateCode(Context &context) {
-	// TODO
+	int begin = context.getCurrentAddress();
+	expr->generateCode(context);
+	int addr = context.reserveInstruction(JMPFALSE);
+	stmnt->generateCode(context);
+	context.addInstruction(JMPTRUE, begin);
+	context.backPatch(addr);
 }
 
 //////////  ~WhileNode~  //////////
@@ -131,10 +136,54 @@ DoWhileNode::~DoWhileNode() {
 }
 
 void DoWhileNode::generateCode(Context &context) {
-	// TODO
+	int begin = context.getCurrentAddress();
+	stmnt->generateCode(context);
+	expr->generateCode(context);
+	context.addInstruction(JMPTRUE, begin);
 }
 
 //////////  ~DoWhileNode~  //////////
+
+//////////  IfThenNode  //////////
+
+IfThenNode::IfThenNode(SyntaxTreeNode *expression, SyntaxTreeNode *then)
+: expr(expression), thenStmnt(then) { }
+
+IfThenNode::~IfThenNode() {
+	delete expr; delete thenStmnt;
+}
+
+void IfThenNode::generateCode(Context &context) {
+	expr->generateCode(context);
+	int addr = context.reserveInstruction(JMPFALSE);
+	thenStmnt->generateCode(context);
+	context.backPatch(addr);
+
+}
+
+//////////  ~IfThenNode~  //////////
+
+//////////  IfThenElseNode  //////////
+
+IfThenElseNode::IfThenElseNode(SyntaxTreeNode *expression, SyntaxTreeNode *then, SyntaxTreeNode *Else)
+: expr(expression), thenStmnt(then), elseStmnt(Else) { }
+
+IfThenElseNode::~IfThenElseNode() {
+	delete expr; delete thenStmnt; delete elseStmnt;
+}
+
+void IfThenElseNode::generateCode(Context &context) {
+	expr->generateCode(context);
+	int addr = context.reserveInstruction(JMPFALSE);
+	thenStmnt->generateCode(context);
+
+	int addr2 = context.reserveInstruction(JMP);
+	context.backPatch(addr);
+	elseStmnt->generateCode(context);
+	context.backPatch(addr2);
+}
+
+//////////  ~IfThenElseNode~  //////////
 
 //////////  IDexpression  //////////
 

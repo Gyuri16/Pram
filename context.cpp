@@ -58,3 +58,7 @@ int Context::reserveInstruction(Instructions JMPType) {
 void Context::backPatch(int address) {
 	codeObjects[activeCodeObject]->backPatch(address);
 }
+
+int Context::getCurrentAddress() {
+	return codeObjects[activeCodeObject]->getCurrentAddress();
+}

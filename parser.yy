@@ -9,11 +9,6 @@
 
 #include "syntaxtree.h"
 
-struct labels{
-	int	for_jmpfalse;
-	int	for_jmp;
-};
-
 %}
 
 /*** yacc/bison Declarations ***/
@@ -62,7 +57,6 @@ struct labels{
     int  			integerVal;
     double 			doubleVal;
     std::string*		stringVal;
-    struct labels*		lbls;
     class SyntaxTreeNode* node;
     class BlockList* blocks;
     class StatementList* statements;
@@ -80,7 +74,7 @@ struct labels{
 %token  WHILE DO
 %token READ WRITE DEF CALL LPAREN RPAREN
 
-%type <node> program blok functiondef statement assignment expression iteration
+%type <node> program blok functiondef statement assignment expression iteration ifstatement
 %type <blocks> blocks 
 %type <statements> statements stmtblock
 
@@ -145,8 +139,8 @@ statement
 	| DEF IDENTIFIER  SEMICOLON { $$ = new VariableDefinition(*$2, "type"); std::cout << "def" << std::endl; }
 	
 ifstatement
-	: IF expression THEN statement %prec REDUCE
-	| IF expression THEN statement ELSE statement
+	: IF expression THEN statement %prec REDUCE    { $$ = new IfThenNode($2, $4); }
+	| IF expression THEN statement ELSE statement  { $$ = new IfThenElseNode($2, $4, $6); }
 
 iteration
 	: WHILE expression statement  { $$ = new WhileNode($2, $3); }

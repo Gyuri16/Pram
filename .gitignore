@@ -6,3 +6,4 @@ pram
 parser.cc
 parser.h
 scanner.cc
+.vimrc

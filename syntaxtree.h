@@ -90,6 +90,27 @@ public:
 	void generateCode(Context &context);
 };
 
+class IfThenNode: public SyntaxTreeNode {
+private:
+	SyntaxTreeNode *expr;
+	SyntaxTreeNode *thenStmnt;
+public:
+	IfThenNode(SyntaxTreeNode *expression, SyntaxTreeNode *then);
+	~IfThenNode();
+	void generateCode(Context &context);
+};
+
+class IfThenElseNode: public SyntaxTreeNode {
+private:
+	SyntaxTreeNode *expr;
+	SyntaxTreeNode *thenStmnt;
+	SyntaxTreeNode *elseStmnt;
+public:
+	IfThenElseNode(SyntaxTreeNode *expression, SyntaxTreeNode *then, SyntaxTreeNode *Else);
+	~IfThenElseNode();
+	void generateCode(Context &context);
+};
+
 class IDexpression: public SyntaxTreeNode {
 private:
 	std::string name;

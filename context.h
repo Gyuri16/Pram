@@ -32,6 +32,7 @@ public:
 	void addInstruction(Instructions instruction, ArgumentType argument);
 	int reserveInstruction(Instructions JMPType);
 	void backPatch(int address);
+	int getCurrentAddress();
 };
 
 #endif
