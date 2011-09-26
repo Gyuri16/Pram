@@ -1,8 +1,0 @@
-def main
-begin
-def x;
-def y;
-do
-x:=y+x;
-while x+x;
-end
