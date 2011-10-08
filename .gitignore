@@ -11,3 +11,6 @@ scanner.cc
 .project
 *.exe
 .settings
+location.hh
+position.hh
+stack.hh 
